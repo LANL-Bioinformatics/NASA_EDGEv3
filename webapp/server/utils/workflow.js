@@ -18,7 +18,7 @@ const nextflowConfigs = {
 const workflowList = {
   AmpIllumina: {
     outdir: 'output/AmpIllumina',
-    nextflow_main: 'main.nf',
+    nextflow_main: 'main.nf -profile slurm,singularity',
     config_tmpl: 'amplicon.tmpl',
   },
 };

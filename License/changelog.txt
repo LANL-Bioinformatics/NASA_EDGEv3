@@ -1,0 +1,6 @@
+22-Jul-2025
+
+Copied and modified a configuration file from GeneLab_AmpliconSeq_Workflow (https://github.com/nasa/GeneLab_AmpliconSeq_Workflow)
+to serve as a template. This is a modification of the original software.
+
+André Watson, Los Alamos National Laboratory

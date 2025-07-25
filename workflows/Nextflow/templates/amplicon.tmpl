@@ -235,15 +235,18 @@ process {
 def trace_timestamp = new java.util.Date().format( 'yyyy-MM-dd_HH-mm-ss')
 timeline {
     enabled = true
-    file    = "../Resource_Usage/execution_timeline_${trace_timestamp}.html"
+    file    = '<%= nextflowOutDir %>/timeline.html'
+    overwrite = true
 }
 report {
     enabled = true
-    file    = "../Resource_Usage/execution_report_${trace_timestamp}.html"
+    file    = '<%= nextflowOutDir %>/report.html'
+    overwrite = true
 }
 trace {
-    enabled = true
-    file    = "../Resource_Usage/execution_trace_${trace_timestamp}.txt"
+    file = '<%= nextflowOutDir %>/trace.txt'
+    fields = 'name,status,start,complete,duration'
+    overwrite = true
 }
 
 

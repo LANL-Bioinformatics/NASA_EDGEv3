@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Home = React.lazy(() => import('src/edge/Home'))
+const Home = React.lazy(() => import('src/workflows/nasa/Home'))
 const PublicProjects = React.lazy(() => import('src/edge/um/public/Projects'))
 const PublicProjectPage = React.lazy(() => import('src/workflows/project/projectPage/Public'))
 const UserLogin = React.lazy(() => import('src/edge/um/user/Login'))

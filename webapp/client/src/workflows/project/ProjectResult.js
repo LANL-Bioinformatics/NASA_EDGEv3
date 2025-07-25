@@ -4,9 +4,7 @@ import { LoaderDialog, FileViewerDialog } from '/src/edge/common/Dialogs'
 import { getData, fetchFile, apis } from '/src/edge/common/util'
 import ProjectGeneral from '/src/edge/project/results/ProjectGeneral'
 import ProjectOutputs from '/src/edge/project/results/ProjectOutputs'
-import { RunFaQCs } from '../metagenomics/results/RunFaQCs'
-import { Assembly } from '../metagenomics/results/Assembly'
-import { Phylogeny } from '../metagenomics/results/Phylogeny'
+import { AmpIllumina } from '../nasa/results/AmpIllumina'
 
 const ProjectResult = (props) => {
   const [project, setProject] = useState()
@@ -213,26 +211,8 @@ const ProjectResult = (props) => {
           />
           {result && (
             <>
-              {project.type === 'runFaQCs' && (
-                <RunFaQCs
-                  result={result}
-                  project={project}
-                  userType={type}
-                  allExpand={allExpand}
-                  allClosed={allClosed}
-                />
-              )}
-              {project.type === 'assembly' && (
-                <Assembly
-                  result={result}
-                  project={project}
-                  userType={type}
-                  allExpand={allExpand}
-                  allClosed={allClosed}
-                />
-              )}
-              {project.type === 'phylogeny' && (
-                <Phylogeny
+              {project.type === 'AmpIllumina' && (
+                <AmpIllumina
                   result={result}
                   project={project}
                   userType={type}

@@ -4,7 +4,7 @@ import { StatsTable } from 'src/edge/common/Tables'
 import { Header } from 'src/edge/project/results/CardHeader'
 import config from 'src/config'
 
-export const Assembly = (props) => {
+export const AmpIllumina = (props) => {
   const [collapseCard, setCollapseCard] = useState(true)
   const url = config.APP.BASE_URI + '/projects/' + props.project.code + '/'
 
@@ -27,26 +27,11 @@ export const Assembly = (props) => {
         toggleParms={() => {
           setCollapseCard(!collapseCard)
         }}
-        title={'Assembly Result'}
+        title={'AmpIllumina Result'}
         collapseParms={collapseCard}
       />
       <Collapse isOpen={!collapseCard}>
-        <CardBody>
-          {props.result.report && (
-            <>
-              <a href={url + props.result.report} target="_blank" rel="noreferrer">
-                [Assembly Report]
-              </a>
-              <br></br>
-              <br></br>
-            </>
-          )}
-          {props.result.stats && (
-            <>
-              <StatsTable data={props.result.stats[0]} headers={[]} />
-            </>
-          )}
-        </CardBody>
+        <CardBody></CardBody>
       </Collapse>
     </Card>
   )

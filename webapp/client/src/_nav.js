@@ -1,7 +1,7 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
-import { cilSpeedometer, cilGrid, cilCloudUpload, cilLayers } from '@coreui/icons'
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import { cilSpeedometer, cilGrid, cilCloudUpload, cilCursor } from '@coreui/icons'
+import { CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
   {
@@ -33,20 +33,10 @@ const _nav = [
     name: 'Workflows',
   },
   {
-    component: CNavGroup,
-    name: 'Metagenomics',
-    icon: <CIcon icon={cilLayers} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Run a Single Workflow',
-        to: '/workflow/metagenomics',
-        badge: {
-          color: 'info',
-          text: '8',
-        },
-      },
-    ],
+    component: CNavItem,
+    name: 'AmpIllumina Pipeline',
+    to: '/workflow/nasa',
+    icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
   },
 ]
 

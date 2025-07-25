@@ -203,6 +203,8 @@ const config = {
     PUBLIC_BASE_DIR: process.env.PUBLIC_BASE_DIR || path.join(IO_BASE_DIR, 'public'),
     // Directory to store user uploaded files
     UPLOADED_FILES_DIR: process.env.UPLOADED_FILES_DIR || path.join(IO_BASE_DIR, 'upload/files'),
+    // Directory for users
+    UPLOADED_USER_DIR: process.env.UPLOADED_USER_DIR || path.join(IO_BASE_DIR, 'upload/users'),
     // Directory used by file uploading function.
     UPLOADED_FILES_TEMP_DIR: process.env.UPLOADED_FILES_TEMP_DIR || path.join(IO_BASE_DIR, 'upload/tmp'),
     // Globus

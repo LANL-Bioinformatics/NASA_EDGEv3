@@ -153,7 +153,7 @@ export const workflows = {
         tooltip: 'Forward primer sequence (type: string)',
         value: '',
         textInput: {
-          placeholder: '(Required) Must be 18-32 bases long, ACGT only',
+          placeholder: '(Required) Must be 1-200 bases long, ACGT only',
           showError: true,
           isOptional: false,
           showErrorTooltip: true,
@@ -165,7 +165,7 @@ export const workflows = {
         tooltip: 'Reverse primer sequence (type: string)',
         value: '',
         textInput: {
-          placeholder: '(Required) Must be 18-32 bases long, ACGT only',
+          placeholder: '(Required) Must be 1-200 bases long, ACGT only',
           showError: true,
           isOptional: false,
           showErrorTooltip: true,
@@ -321,12 +321,12 @@ export const workflows = {
       F_primer: {
         isValid: true,
         error:
-          'F_primer input error. Invalid primer sequence. Must be 18-32 bases long, ACGT only.',
+          'F_primer input error. Invalid primer sequence. Must be 1-200 bases long, ACGT only.',
       },
       R_primer: {
         isValid: true,
         error:
-          'R_primer input error. Invalid primer sequence. Must be 18-32 bases long, ACGT only.',
+          'R_primer input error. Invalid primer sequence. Must be 1-200 bases long, ACGT only.',
       },
     },
   },

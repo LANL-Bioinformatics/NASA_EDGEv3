@@ -1,7 +1,9 @@
 const fs = require('fs');
+const path = require('path');
 const ejs = require('ejs');
 const Papa = require('papaparse');
 const Job = require('../edge-api/models/job');
+const User = require('../edge-api/models/user');
 const { nextflowConfigs, workflowList, generateWorkflowResult } = require('./workflow');
 const { write2log, execCmd, sleep, pidIsRunning } = require('./common');
 const logger = require('./logger');
@@ -43,6 +45,45 @@ const generateInputs = async (projHome, projectConf, proj) => {
     } else {
       params.inputFastq = projectConf.rawReads.inputFiles;
     }
+  }
+  // add path to runsheet
+  if (projectConf.workflow.name === 'AmpIllumina' && projectConf.workflow.input.input_file) {
+    let dataPath = path.dirname(projectConf.workflow.input.input_file);
+    if (dataPath.includes(config.IO.UPLOADED_FILES_DIR)) {
+      // find user uploaded file directory
+      const user = await User.findOne({ email: proj.owner });
+      if (!user) {
+        return false;
+      }
+      // user folder in upload directory
+      dataPath = `${config.IO.UPLOADED_USER_DIR}/${user.id}`;
+    }
+
+    if (config.NEXTFLOW.SLURM_EDGE_ROOT && config.NEXTFLOW.EDGE_ROOT) {
+      dataPath = dataPath.replaceAll(config.NEXTFLOW.EDGE_ROOT, config.NEXTFLOW.SLURM_EDGE_ROOT);
+    }
+
+    const csv = fs.readFileSync(projectConf.workflow.input.input_file, 'utf8');
+    const newCsv = csv
+      .split(/\r?\n/g)
+      .map((row, index) => {
+        if (index === 0) {
+          // header row
+          return row.split(',');
+        }
+        const cols = row.split(',');
+        if (cols.length !== 4 && cols.length !== 5) {
+          return null; // skip invalid rows
+        }
+        if (cols.length === 5) {
+          return [cols[0], `${dataPath}/${cols[1]}`, `${dataPath}/${cols[2]}`, cols[3], cols[4]];
+        }
+        return [cols[0], `${dataPath}/${cols[1]}`, cols[2], cols[3]];
+      }).filter(item => item !== null);;
+
+    // create csv file in project home
+    await fs.promises.writeFile(`${projHome}/runsheet.csv`, newCsv.map((row) => row.join(',')).join('\n'));
+    params.input_file = `${projHome}/runsheet.csv`;
   }
 
   // render input template and write to nextflow_params.json

@@ -239,6 +239,7 @@ export const AmpIllumina = (props) => {
                 isValidTextInput={isValidPrimer}
                 errMessage={'Invalid primer sequence'}
                 showErrorTooltip={true}
+                toUpperCase={true}
               />
               <br></br>
               <TextInput
@@ -253,6 +254,7 @@ export const AmpIllumina = (props) => {
                 isValidTextInput={isValidPrimer}
                 errMessage={'Invalid primer sequence'}
                 showErrorTooltip={true}
+                toUpperCase={true}
               />
               <br></br>
             </>
@@ -378,6 +380,8 @@ export const AmpIllumina = (props) => {
             }
             min={workflows[workflowName].inputs['rarefaction_depth']['integerInput'].min}
             max={workflows[workflowName].inputs['rarefaction_depth']['integerInput'].max}
+            errMessage={validInputs['rarefaction_depth'].error}
+            showErrorTooltip={true}
           />
           <br></br>
           <OptionSelector

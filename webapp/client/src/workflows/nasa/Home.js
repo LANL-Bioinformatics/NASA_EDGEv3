@@ -18,7 +18,7 @@ function Home() {
               framework and has only the NASA GeneLab Illumina amplicon sequencing data processing
               pipeline (
               <a
-                href="https://github.com/nasa/GeneLab_AmpliconSeq_Workflow/tree/DEV_v1.0.0"
+                href="https://github.com/nasa/GeneLab_AmpliconSeq_Workflow"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -31,8 +31,8 @@ function Home() {
               <img
                 src="/nasa-pipeline-overview.png"
                 alt="pipeline overview"
-                width="60%"
-                height="60%"
+                width="80%"
+                height="80%"
               />
             </center>
           </div>

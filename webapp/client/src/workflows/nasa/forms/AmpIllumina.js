@@ -103,7 +103,10 @@ export const AmpIllumina = (props) => {
     // check input errors
     let errors = ''
     Object.keys(validInputs).forEach((key) => {
-      if (form.inputs.start_input.value === 'accession' && (key === 'input_file' || key === 'F_primer' || key === 'R_primer')) {
+      if (
+        form.inputs.start_input.value === 'accession' &&
+        (key === 'input_file' || key === 'F_primer' || key === 'R_primer')
+      ) {
         // skip file input validation if start_input is accession
       } else if (form.inputs.start_input.value === 'input_file' && key === 'accession') {
         // skip accession validation if start_input is input_file

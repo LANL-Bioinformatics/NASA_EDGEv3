@@ -153,7 +153,7 @@ export const workflows = {
         tooltip: 'Forward primer sequence (type: string)',
         value: '',
         textInput: {
-          placeholder: '(Required) Must be 1-200 bases long, ACGT only',
+          placeholder: '(Required) Must be 1-200 bases long, IUPAC nucleotide codes only',
           showError: true,
           isOptional: false,
           showErrorTooltip: true,
@@ -165,7 +165,7 @@ export const workflows = {
         tooltip: 'Reverse primer sequence (type: string)',
         value: '',
         textInput: {
-          placeholder: '(Required) Must be 1-200 bases long, ACGT only',
+          placeholder: '(Required) Must be 1-200 bases long, IUPAC nucleotide codes only',
           showError: true,
           isOptional: false,
           showErrorTooltip: true,

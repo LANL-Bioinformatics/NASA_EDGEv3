@@ -12,7 +12,7 @@ export const isValidPrimer = (primer) => {
   if (!primer || primer.trim() === '') {
     return true
   }
-  if (!/^[atgc]{1,200}$/i.test(primer.trim())) {
+  if (!/^[atgcuryswkmbdhvn\.-]{1,200}$/i.test(primer.trim())) {
     return false
   }
   return true

@@ -86,10 +86,11 @@ const generateInputs = async (projHome, projectConf, proj) => {
 
     // create csv file in project home
     await fs.promises.writeFile(`${projHome}/runsheet.csv`, newCsv.map((row) => {
+      row = row.join(',');
       if (config.NEXTFLOW.SLURM_EDGE_ROOT && config.NEXTFLOW.EDGE_ROOT) {
         row = row.replaceAll(config.NEXTFLOW.EDGE_ROOT, config.NEXTFLOW.SLURM_EDGE_ROOT);
       }
-      return row.join(',');
+      return row;
     }).join('\n'));
     params.input_file = `${projHome}/runsheet.csv`;
   }

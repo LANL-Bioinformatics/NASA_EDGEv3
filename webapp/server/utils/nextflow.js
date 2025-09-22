@@ -59,11 +59,8 @@ const generateInputs = async (projHome, projectConf, proj) => {
       dataPath = `${config.IO.UPLOADED_USER_DIR}/${user.id}`;
     }
 
-    if (config.NEXTFLOW.SLURM_EDGE_ROOT && config.NEXTFLOW.EDGE_ROOT) {
-      dataPath = dataPath.replaceAll(config.NEXTFLOW.EDGE_ROOT, config.NEXTFLOW.SLURM_EDGE_ROOT);
-    }
-
     const csv = fs.readFileSync(projectConf.workflow.input.input_file, 'utf8');
+    // check if all files exist, and convert to real path for nextflow
     const newCsv = csv
       .split(/\r?\n/g)
       .map((row, index) => {
@@ -75,14 +72,25 @@ const generateInputs = async (projHome, projectConf, proj) => {
         if (cols.length !== 4 && cols.length !== 5) {
           return null; // skip invalid rows
         }
-        if (cols.length === 5) {
-          return [cols[0], `${dataPath}/${cols[1]}`, `${dataPath}/${cols[2]}`, cols[3], cols[4]];
+        if (fs.existsSync(`${dataPath}/${cols[1]}`) === false) {
+          throw Error(`File not found: ${dataPath}/${cols[1]}`);
         }
-        return [cols[0], `${dataPath}/${cols[1]}`, cols[2], cols[3]];
-      }).filter(item => item !== null);;
+        if (cols.length === 5) {
+          if (fs.existsSync(`${dataPath}/${cols[2]}`) === false) {
+            throw Error(`File not found: ${dataPath}/${cols[2]}`);
+          }
+          return [cols[0], fs.realpathSync(`${dataPath}/${cols[1]}`), fs.realpathSync(`${dataPath}/${cols[2]}`), cols[3], cols[4]];
+        }
+        return [cols[0], fs.realpathSync(`${dataPath}/${cols[1]}`), cols[2], cols[3]];
+      }).filter(item => item !== null);
 
     // create csv file in project home
-    await fs.promises.writeFile(`${projHome}/runsheet.csv`, newCsv.map((row) => row.join(',')).join('\n'));
+    await fs.promises.writeFile(`${projHome}/runsheet.csv`, newCsv.map((row) => {
+      if (config.NEXTFLOW.SLURM_EDGE_ROOT && config.NEXTFLOW.EDGE_ROOT) {
+        row = row.replaceAll(config.NEXTFLOW.EDGE_ROOT, config.NEXTFLOW.SLURM_EDGE_ROOT);
+      }
+      return row.join(',');
+    }).join('\n'));
     params.input_file = `${projHome}/runsheet.csv`;
   }
 

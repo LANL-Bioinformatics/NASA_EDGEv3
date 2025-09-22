@@ -12,25 +12,25 @@ const config = require('../config');
 
 const nextflowWorkflowMonitor = async () => {
   logger.debug('Nextflow workflow monitor');
+  // only process one job at each time based on job updated time
+  const jobs = await Job.find({ 'queue': 'nextflow', 'status': { $in: ['Submitted', 'Running'] } }).sort({ updated: 1 });
+  // submit request only when the current nextflow running jobs less than the max allowed jobs
+  if (jobs.length >= config.NEXTFLOW.NUM_JOBS_MAX) {
+    return;
+  }
+  // get current running/submitted projects' input size
+  let jobInputsize = 0;
+  jobs.forEach(job => {
+    jobInputsize += job.inputSize;
+  });
+  // only process one request at each time
+  const projs = await Project.find({ 'type': { $in: nextflowWorkflows }, 'status': 'in queue' }).sort({ updated: 1 });
+  const proj = projs[0];
+  if (!proj) {
+    logger.debug('No nextflow workflow request to process');
+    return;
+  }
   try {
-    // only process one job at each time based on job updated time
-    const jobs = await Job.find({ 'queue': 'nextflow', 'status': { $in: ['Submitted', 'Running'] } }).sort({ updated: 1 });
-    // submit request only when the current nextflow running jobs less than the max allowed jobs
-    if (jobs.length >= config.NEXTFLOW.NUM_JOBS_MAX) {
-      return;
-    }
-    // get current running/submitted projects' input size
-    let jobInputsize = 0;
-    jobs.forEach(job => {
-      jobInputsize += job.inputSize;
-    });
-    // only process one request at each time
-    const projs = await Project.find({ 'type': { $in: nextflowWorkflows }, 'status': 'in queue' }).sort({ updated: 1 });
-    const proj = projs[0];
-    if (!proj) {
-      logger.debug('No nextflow workflow request to process');
-      return;
-    }
     // parse conf.json
     const projHome = `${config.IO.PROJECT_BASE_DIR}/${proj.code}`;
     const projectConf = JSON.parse(fs.readFileSync(`${projHome}/conf.json`));
@@ -72,6 +72,11 @@ const nextflowWorkflowMonitor = async () => {
     logger.info('Done workflow submission');
   } catch (err) {
     logger.error(`nextflowWorkflowMonitor failed:${err}`);
+    // fail project
+    proj.status = 'failed';
+    proj.updated = Date.now();
+    await proj.save();
+    common.write2log(`${config.IO.PROJECT_BASE_DIR}/${proj.code}/log.txt`, `Workflow submission failed: ${err}`);
   }
 };
 

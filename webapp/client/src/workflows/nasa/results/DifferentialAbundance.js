@@ -14,7 +14,6 @@ export const DifferentialAbundance = (props) => {
 
   return (
     <>
-      <br></br>
       <ButtonGroup className="mr-3" aria-label="First group" size="sm">
         {buttons.map((item, index) => (
           <Button
@@ -29,6 +28,50 @@ export const DifferentialAbundance = (props) => {
           </Button>
         ))}
       </ButtonGroup>
+      <br></br>
+      <br></br>
+      {selectedButton === 'ANCOMBC1' && (
+        <>
+          A description of each of the following ANCOMBC1 differential abundance output files can be
+          found in the “Output Data” section of{' '}
+          <a
+            href="https://github.com/nasa/GeneLab_Data_Processing/tree/master/Amplicon/Illumina/Pipeline_GL-DPPD-7104_Versions/GL-DPPD-7104-C.md#10a-ancombc-1"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Step 10a, “ANCOMBC1”
+          </a>
+          , of the GeneLab Amplicon Sequencing Pipeline document on GitHub.
+        </>
+      )}
+      {selectedButton === 'ANCOMBC2' && (
+        <>
+          A description of each of the following ANCOMBC2 differential abundance output files can be
+          found in the “Output Data” section of{' '}
+          <a
+            href="https://github.com/nasa/GeneLab_Data_Processing/tree/master/Amplicon/Illumina/Pipeline_GL-DPPD-7104_Versions/GL-DPPD-7104-C.md#10b-ancombc-2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Step 10b , “ANCOMBC2”
+          </a>
+          , of the GeneLab Amplicon Sequencing Pipeline document on GitHub.
+        </>
+      )}
+      {selectedButton === 'DESeq2' && (
+        <>
+          A description of each of the following DESeq2 differential abundance output files can be
+          found in the “Output Data” section of{' '}
+          <a
+            href="https://github.com/nasa/GeneLab_Data_Processing/tree/master/Amplicon/Illumina/Pipeline_GL-DPPD-7104_Versions/GL-DPPD-7104-C.md#10c-deseq2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Step 10c, “DESeq2”
+          </a>
+          , of the GeneLab Amplicon Sequencing Pipeline document on GitHub.
+        </>
+      )}
       <br></br>
       <br></br>
       {props.result[selectedButton] ? (

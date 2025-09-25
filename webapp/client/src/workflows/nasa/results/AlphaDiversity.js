@@ -9,6 +9,17 @@ export const AlphaDiversity = (props) => {
 
   return (
     <>
+      A description of each of the following alpha diversity output files can be found in the
+      “Output Data” sections of{' '}
+      <a
+        href="https://github.com/nasa/GeneLab_Data_Processing/blob/master/Amplicon/Illumina/Pipeline_GL-DPPD-7104_Versions/GL-DPPD-7104-C.md#7-alpha-diversity-analysis"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Step 7, “Alpha Diversity Analysis”
+      </a>
+      , of the GeneLab Amplicon Sequencing Pipeline document on GitHub.
+      <br></br>
       <br></br>
       {props.result ? (
         props.result['plots'].map((html, id) => (

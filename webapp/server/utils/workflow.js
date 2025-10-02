@@ -159,7 +159,7 @@ const generateWorkflowResult = (proj) => {
       result.differential_abundance.ANCOMBC1.plots = [];
       result.differential_abundance.ANCOMBC2.plots = [];
       result.differential_abundance.DESeq2.plots = [];
-      const plotReg = /_volcano(.*).png$/;
+      const plotReg = /_(.*).png$/;
       let plotDir = 'workflow_output/Final_Outputs/differential_abundance/ancombc1';
       let plots = fs.readdirSync(`${outdir}/${plotDir}`);
       plots.forEach((plot) => {
@@ -168,7 +168,7 @@ const generateWorkflowResult = (proj) => {
             `${workflowList[projectConf.workflow.name].outdir}/${plotDir}/${plot}`);
         }
       });
-      plotDir = 'workflow_output/Final_Outputs/differential_abundance//ancombc2';
+      plotDir = 'workflow_output/Final_Outputs/differential_abundance/ancombc2';
       plots = fs.readdirSync(`${outdir}/${plotDir}`);
       plots.forEach((plot) => {
         if (plotReg.test(plot)) {

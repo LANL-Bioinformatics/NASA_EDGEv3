@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+/* eslint-disable prettier/prettier */
+import React, { useState, useEffect, useMemo } from 'react'
 import { Card, CardBody, Collapse, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
-
-import { JsonTable } from 'src/edge/common/Tables'
+import { MaterialReactTable } from 'material-react-table'
+import { ThemeProvider } from '@mui/material'
+import { theme } from 'src/edge/um/common/tableUtil'
 import { Header } from 'src/edge/project/results/CardHeader'
-import config from 'src/config'
 import { AlphaDiversity } from './AlphaDiversity'
 import { BetaDiversity } from './BetaDiversity'
 import { Taxonomy } from './Taxonomy'
@@ -11,7 +12,6 @@ import { DifferentialAbundance } from './DifferentialAbundance'
 
 export const AmpIllumina = (props) => {
   const [collapseCard, setCollapseCard] = useState(true)
-  const url = config.APP.BASE_URI + '/projects/' + props.project.code + '/'
   const tabs = {
     'Alpha Diversity': 'alpha_diversity',
     'Beta Diversity': 'beta_diversity',
@@ -19,6 +19,32 @@ export const AmpIllumina = (props) => {
     'Differential Abundance': 'differential_abundance',
   }
   const [activeTab, setActiveTab] = useState(0)
+  const tableData = props.result['Read Count Tracking']
+  //create columns from data
+  const columns = useMemo(
+    () =>
+      tableData.length
+        ? Object.keys(tableData[0]).map((columnId) => ({
+          header: columnId,
+          accessorKey: columnId,
+          id: columnId,
+        }))
+        : [],
+    [tableData],
+  )
+  const tableData2 = props.result['Taxonomy and Counts']
+  //create columns from data
+  const columns2 = useMemo(
+    () =>
+      tableData2.length
+        ? Object.keys(tableData2[0]).map((columnId) => ({
+          header: columnId,
+          accessorKey: columnId,
+          id: columnId,
+        }))
+        : [],
+    [tableData2],
+  )
 
   const toggleTab = (tab) => {
     setActiveTab(tab)
@@ -90,34 +116,61 @@ export const AmpIllumina = (props) => {
           </TabContent>
           <br></br>
           <br></br>
-          <h4>Read Count Tracking</h4>
-          <br></br>
-          {props.result['Read Count Tracking'] ? (
-            <JsonTable
-              data={props.result['Read Count Tracking']}
-              headers={Object.keys(props.result['Read Count Tracking'][0])}
-            />
-          ) : (
-            <span>
-              Empty table
-              <br></br>
-              <br></br>
-            </span>
+          {tableData && (
+            <>
+              <ThemeProvider theme={theme}>
+                <MaterialReactTable
+                  columns={columns}
+                  data={tableData}
+                  enableFullScreenToggle={false}
+                  muiTablePaginationProps={{
+                    rowsPerPageOptions: [10, 20, 50, 100],
+                    labelRowsPerPage: 'rows per page',
+                  }}
+                  renderEmptyRowsFallback={() => (
+                    <center>
+                      <br></br>No result to display
+                    </center>
+                  )}
+                  renderTopToolbarCustomActions={({ table }) => {
+                    return (
+                      <div>
+                        <div style={{ fontSize: '24px' }}>{'Read Count Tracking'}</div>
+                      </div>
+                    )
+                  }}
+                />
+              </ThemeProvider>
+            </>
           )}
           <br></br>
-          <h4>Taxonomy and Counts</h4>
           <br></br>
-          {props.result['Taxonomy and Counts'] ? (
-            <JsonTable
-              data={props.result['Taxonomy and Counts']}
-              headers={Object.keys(props.result['Taxonomy and Counts'][0])}
-            />
-          ) : (
-            <span>
-              Empty table
-              <br></br>
-              <br></br>
-            </span>
+          {tableData2 && (
+            <>
+              <ThemeProvider theme={theme}>
+                <MaterialReactTable
+                  columns={columns2}
+                  data={tableData2}
+                  enableFullScreenToggle={false}
+                  muiTablePaginationProps={{
+                    rowsPerPageOptions: [10, 20, 50, 100],
+                    labelRowsPerPage: 'rows per page',
+                  }}
+                  renderEmptyRowsFallback={() => (
+                    <center>
+                      <br></br>No result to display
+                    </center>
+                  )}
+                  renderTopToolbarCustomActions={({ table }) => {
+                    return (
+                      <div>
+                        <div style={{ fontSize: '24px' }}>{'Taxonomy and Counts'}</div>
+                      </div>
+                    )
+                  }}
+                />
+              </ThemeProvider>
+            </>
           )}
           <br></br>
         </CardBody>

@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'
+/* eslint-disable prettier/prettier */
+import React, { useState, useMemo } from 'react'
 import { Button, ButtonGroup } from 'reactstrap'
-
+import { MaterialReactTable } from 'material-react-table'
+import { ThemeProvider } from '@mui/material'
+import { theme } from 'src/edge/um/common/tableUtil'
 import { JsonTable } from 'src/edge/common/Tables'
 import config from 'src/config'
 
@@ -11,6 +14,19 @@ export const DifferentialAbundance = (props) => {
   const [table1Open, setTable1Open] = useState(false)
   const [table2Open, setTable2Open] = useState(false)
   const [table3Open, setTable3Open] = useState(false)
+  const tableData = props.result[selectedButton]['Differential Abundance']
+  //create columns from data
+  const columns = useMemo(
+    () =>
+      tableData.length
+        ? Object.keys(tableData[0]).map((columnId) => ({
+          header: columnId,
+          accessorKey: columnId,
+          id: columnId,
+        }))
+        : [],
+    [tableData],
+  )
 
   return (
     <>
@@ -134,16 +150,25 @@ export const DifferentialAbundance = (props) => {
       </span>
       {table3Open && (
         <>
-          {props.result[selectedButton]['Differential Abundance'] ? (
-            <JsonTable
-              data={props.result[selectedButton]['Differential Abundance']}
-              headers={Object.keys(props.result[selectedButton]['Differential Abundance'][0])}
-            />
-          ) : (
-            <span>
-              <br></br>
-              Empty table
-            </span>
+          {tableData && (
+            <>
+              <ThemeProvider theme={theme}>
+                <MaterialReactTable
+                  columns={columns}
+                  data={tableData}
+                  enableFullScreenToggle={false}
+                  muiTablePaginationProps={{
+                    rowsPerPageOptions: [10, 20, 50, 100],
+                    labelRowsPerPage: 'rows per page',
+                  }}
+                  renderEmptyRowsFallback={() => (
+                    <center>
+                      <br></br>No result to display
+                    </center>
+                  )}
+                />
+              </ThemeProvider>
+            </>
           )}
         </>
       )}

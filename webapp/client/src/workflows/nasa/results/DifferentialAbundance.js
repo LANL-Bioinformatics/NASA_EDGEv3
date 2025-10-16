@@ -14,18 +14,42 @@ export const DifferentialAbundance = (props) => {
   const [table1Open, setTable1Open] = useState(false)
   const [table2Open, setTable2Open] = useState(false)
   const [table3Open, setTable3Open] = useState(false)
-  const tableData = props.result[selectedButton]['Differential Abundance']
+  const tableData1 = props.result[buttons[0]]['Differential Abundance']
+  const tableData2 = props.result[buttons[1]]['Differential Abundance']
+  const tableData3 = props.result[buttons[2]]['Differential Abundance']
   //create columns from data
-  const columns = useMemo(
+  const columns1 = useMemo(
     () =>
-      tableData.length
-        ? Object.keys(tableData[0]).map((columnId) => ({
+      tableData1.length
+        ? Object.keys(tableData1[0]).map((columnId) => ({
           header: columnId,
           accessorKey: columnId,
           id: columnId,
         }))
         : [],
-    [tableData],
+    [tableData1],
+  )
+  const columns2 = useMemo(
+    () =>
+      tableData2.length
+        ? Object.keys(tableData2[0]).map((columnId) => ({
+          header: columnId,
+          accessorKey: columnId,
+          id: columnId,
+        }))
+        : [],
+    [tableData2],
+  )
+  const columns3 = useMemo(
+    () =>
+      tableData3.length
+        ? Object.keys(tableData3[0]).map((columnId) => ({
+          header: columnId,
+          accessorKey: columnId,
+          id: columnId,
+        }))
+        : [],
+    [tableData3],
   )
 
   return (
@@ -150,12 +174,55 @@ export const DifferentialAbundance = (props) => {
       </span>
       {table3Open && (
         <>
-          {tableData && (
+          {selectedButton === buttons[0] && (
             <>
               <ThemeProvider theme={theme}>
                 <MaterialReactTable
-                  columns={columns}
-                  data={tableData}
+                  key={buttons[0]}
+                  columns={columns1}
+                  data={tableData1}
+                  enableFullScreenToggle={false}
+                  muiTablePaginationProps={{
+                    rowsPerPageOptions: [10, 20, 50, 100],
+                    labelRowsPerPage: 'rows per page',
+                  }}
+                  renderEmptyRowsFallback={() => (
+                    <center>
+                      <br></br>No result to display
+                    </center>
+                  )}
+                />
+              </ThemeProvider>
+            </>
+          )}
+          {selectedButton === buttons[1] && (
+            <>
+              <ThemeProvider theme={theme}>
+                <MaterialReactTable
+                  key={buttons[1]}
+                  columns={columns2}
+                  data={tableData2}
+                  enableFullScreenToggle={false}
+                  muiTablePaginationProps={{
+                    rowsPerPageOptions: [10, 20, 50, 100],
+                    labelRowsPerPage: 'rows per page',
+                  }}
+                  renderEmptyRowsFallback={() => (
+                    <center>
+                      <br></br>No result to display
+                    </center>
+                  )}
+                />
+              </ThemeProvider>
+            </>
+          )}
+          {selectedButton === buttons[2] && (
+            <>
+              <ThemeProvider theme={theme}>
+                <MaterialReactTable
+                  key={buttons[2]}
+                  columns={columns3}
+                  data={tableData3}
                   enableFullScreenToggle={false}
                   muiTablePaginationProps={{
                     rowsPerPageOptions: [10, 20, 50, 100],

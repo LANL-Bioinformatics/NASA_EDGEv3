@@ -7,7 +7,7 @@ const updateUploadAsync = createAsyncThunk(
   'user/updateUpload',
   async (uploadData, { dispatch }) => {
     try {
-      await putData(`/api/auth-user/nasa/uploads//${uploadData.code}`, uploadData)
+      await putData(`/api/auth-user/nasa/uploads/${uploadData.code}`, uploadData)
     } catch (err) {
       if (typeof err === 'string') {
         dispatch(addError({ [uploadData.code]: err }))

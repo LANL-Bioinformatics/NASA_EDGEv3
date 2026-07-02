@@ -253,14 +253,17 @@ process {
 def trace_timestamp = new java.util.Date().format( 'yyyy-MM-dd_HH-mm-ss')
 timeline {
     enabled = true
+    overwrite = true
     file    = "${params.outdir}/Resource_Usage/execution_timeline_${trace_timestamp}.html"
 }
 report {
     enabled = true
+    overwrite = true
     file    = "${params.outdir}/Resource_Usage/execution_report_${trace_timestamp}.html"
 }
 trace {
     enabled = true
+    overwrite = true
     file    = "${params.outdir}/Resource_Usage/execution_trace_${trace_timestamp}.txt"
 }
 

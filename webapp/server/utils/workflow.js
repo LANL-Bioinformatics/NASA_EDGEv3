@@ -139,21 +139,22 @@ const generateWorkflowResult = (proj) => {
       result.differential_abundance = {
         ANCOMBC1: {
           plots: ['need find all ANCOMBC1 plots'],
-          'Sample Info': Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/SampleTable_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data,
-          'Pairwise Contrasts': Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/contrasts_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data,
-          'Differential Abundance': Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/ancombc1/ancombc1_differential_abundance_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data,
+          // check if the file exists before parsing
+          'Sample Info': fs.existsSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/SampleTable_GLAmpSeq.csv`) ? Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/SampleTable_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data : [],
+          'Pairwise Contrasts': fs.existsSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/contrasts_GLAmpSeq.csv`) ? Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/contrasts_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data : [],
+          'Differential Abundance': fs.existsSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/ancombc1/ancombc1_differential_abundance_GLAmpSeq.csv`) ? Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/ancombc1/ancombc1_differential_abundance_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data : [],
         },
         ANCOMBC2: {
           plots: ['need find all ANCOMBC2 plots'],
-          'Sample Info': Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/SampleTable_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data,
-          'Pairwise Contrasts': Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/contrasts_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data,
-          'Differential Abundance': Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/ancombc2/ancombc2_differential_abundance_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data,
+          'Sample Info': fs.existsSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/SampleTable_GLAmpSeq.csv`) ? Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/SampleTable_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data : [],
+          'Pairwise Contrasts': fs.existsSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/contrasts_GLAmpSeq.csv`) ? Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/contrasts_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data : [],
+          'Differential Abundance': fs.existsSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/ancombc2/ancombc2_differential_abundance_GLAmpSeq.csv`) ? Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/ancombc2/ancombc2_differential_abundance_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data : [],
         },
         DESeq2: {
           plots: ['need find all DESeq2 plots'],
-          'Sample Info': Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/SampleTable_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data,
-          'Pairwise Contrasts': Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/contrasts_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data,
-          'Differential Abundance': Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/deseq2/deseq2_differential_abundance_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data,
+          'Sample Info': fs.existsSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/SampleTable_GLAmpSeq.csv`) ? Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/SampleTable_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data : [],
+          'Pairwise Contrasts': fs.existsSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/contrasts_GLAmpSeq.csv`) ? Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/contrasts_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data : [],
+          'Differential Abundance': fs.existsSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/deseq2/deseq2_differential_abundance_GLAmpSeq.csv`) ? Papa.parse(fs.readFileSync(`${outdir}/workflow_output/Final_Outputs/differential_abundance/deseq2/deseq2_differential_abundance_GLAmpSeq.csv`).toString(), { delimiter: ',', header: true, skipEmptyLines: true }).data : [],
         },
       };
       result.differential_abundance.ANCOMBC1.plots = [];
